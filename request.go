@@ -37,6 +37,17 @@ func (r *Request) Attach(req *resty.Request) {
 	r.Request = req
 }
 
+func (r *Request) Send() (*resty.Response, error) {
+	rawResponse, err := r.Request.Send()
+	if err != nil {
+		return nil, err
+	}
+	if err := requireOk(rawResponse); err != nil {
+		return nil, err
+	}
+	return rawResponse, nil
+}
+
 // RequestOptions
 // use options to override some request settings
 type RequestOptions func(request *Request)
@@ -128,7 +139,7 @@ func (c *Client) Options(host, url string, options ...RequestOptions) *Request {
 }
 
 func requireOk(resp *resty.Response) error {
-	return requireHttpCode(resp, 200)
+	return requireHttpCode(resp, http.StatusOK, http.StatusCreated, http.StatusAccepted)
 }
 
 func requireHttpCode(resp *resty.Response, httpCode ...int) error {
