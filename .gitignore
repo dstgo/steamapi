@@ -8,6 +8,12 @@
 *.so
 *.dylib
 
+# steam secret file
+*.key
+
+# idea project files
+.idea/
+
 # Test binary, built with `go test -c`
 *.test
 
