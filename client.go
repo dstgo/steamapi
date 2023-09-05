@@ -3,7 +3,6 @@ package steamapi
 import (
 	"errors"
 	"github.com/go-resty/resty/v2"
-	"github.com/spf13/cast"
 )
 
 var (
@@ -24,12 +23,6 @@ func WithKey(key string) Options {
 	}
 }
 
-func WithLanguage(lang uint) Options {
-	return func(c *Client) {
-		c.language = cast.ToString(lang)
-	}
-}
-
 func WithResty(client *resty.Client) Options {
 	return func(c *Client) {
 		c.client = client
@@ -45,10 +38,9 @@ func WithHttps(https bool) Options {
 // Client
 // steam api client, interact with steam api server
 type Client struct {
-	key      string
-	language string
-	https    bool
-	client   *resty.Client
+	key    string
+	https  bool
+	client *resty.Client
 
 	baseurl string
 }
@@ -74,10 +66,6 @@ func NewWith(options ...Options) (*Client, error) {
 	// key must be provided
 	if len(client.key) == 0 {
 		return client, ApiKeyNotExistErr
-	}
-
-	if len(client.language) == 0 {
-		client.language = "0"
 	}
 
 	if client.client == nil {

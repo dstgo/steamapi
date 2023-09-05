@@ -1,4 +1,4 @@
-package types
+package webapiutil
 
 type ServerInfo struct {
 	ServerTime       uint64 `json:"servertime"`

@@ -1,6 +1,8 @@
 package steamapi
 
-import "github.com/246859/steamapi/types"
+import (
+	"github.com/246859/steamapi/types/webapiutil"
+)
 
 const (
 	GetServerInfoURL = "/ISteamWebAPIUtil/GetServerInfo/v1/"
@@ -17,8 +19,8 @@ type ISteamWebAPIUtil struct {
 }
 
 // GetServerInfo see https://partner.steamgames.com/doc/webapi/ISteamWebAPIUtil#GetServerInfo
-func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (types.ServerInfo, error) {
-	var serverInfo types.ServerInfo
+func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (webapiutil.ServerInfo, error) {
+	var serverInfo webapiutil.ServerInfo
 	_, err := i.c.Get(PublicHost, GetServerInfoURL, options...).SetResult(&serverInfo).Send()
 	if err != nil {
 		return serverInfo, err
@@ -28,8 +30,8 @@ func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (types.Serve
 }
 
 // GetSupportedAPIList see https://partner.steamgames.com/doc/webapi/ISteamWebAPIUtil#GetSupportedAPIList
-func (i *ISteamWebAPIUtil) GetSupportedAPIList(options ...RequestOptions) (types.SteamApiList, error) {
-	var list types.SteamApiList
+func (i *ISteamWebAPIUtil) GetSupportedAPIList(options ...RequestOptions) (webapiutil.SteamApiList, error) {
+	var list webapiutil.SteamApiList
 	_, err := i.c.Get(PublicHost, GetSupportedAPIListURL, options...).SetResult(&list).Send()
 	if err != nil {
 		return list, err
