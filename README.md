@@ -1,3 +1,5 @@
+English|[简体中文](README.zh.md)
+
 # steamapi
 steamapi is a Steam Web API Go package,By using it, you can easily interact with the Steam web API.
 
@@ -8,7 +10,9 @@ steamapi is a Steam Web API Go package,By using it, you can easily interact with
 go get github.com/246859/steamapi
 ```
 
-
+## api doc
+The original Steam API address is [Steam Web API](https://partner.steamgames.com/doc/webapi), but you can also go to [steamapi doc](https://apifox.com/apidoc/shared-1a2822b1-0e88-4df1-b7ad-08acfd783cf2)
+View interface documents, support preview interface response and online debugging.
 
 ## Supported Interface
 
@@ -19,7 +23,7 @@ go get github.com/246859/steamapi
 ## Example
 
 **GetServerInfo** interface has no apikey required, but you should pass a key still.In this case, 
-you can pass a steamapi.NopKey to New func which just a meaningless string.
+you can pass a `steamapi.NopKey` to New func which just a meaningless string.
 
 ```go
 // initialize client with NopKey
