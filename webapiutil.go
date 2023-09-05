@@ -21,8 +21,9 @@ type ISteamWebAPIUtil struct {
 // GetServerInfo see https://partner.steamgames.com/doc/webapi/ISteamWebAPIUtil#GetServerInfo
 func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (webapiutil.ServerInfo, error) {
 	var serverInfo webapiutil.ServerInfo
-	_, err := i.c.Get(PublicHost, GetServerInfoURL, options...).SetResult(&serverInfo).Send()
-	if err != nil {
+	req := i.c.Get(PublicHost, GetServerInfoURL, options...)
+	req.SetResult(&serverInfo)
+	if _, err := req.Send(); err != nil {
 		return serverInfo, err
 	}
 
@@ -32,8 +33,9 @@ func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (webapiutil.
 // GetSupportedAPIList see https://partner.steamgames.com/doc/webapi/ISteamWebAPIUtil#GetSupportedAPIList
 func (i *ISteamWebAPIUtil) GetSupportedAPIList(options ...RequestOptions) (webapiutil.SteamApiList, error) {
 	var list webapiutil.SteamApiList
-	_, err := i.c.Get(PublicHost, GetSupportedAPIListURL, options...).SetResult(&list).Send()
-	if err != nil {
+	request := i.c.Get(PublicHost, GetSupportedAPIListURL, options...)
+	request.SetResult(&list)
+	if _, err := request.Send(); err != nil {
 		return list, err
 	}
 	return list, nil
