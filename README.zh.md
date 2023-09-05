@@ -1,27 +1,27 @@
-English|[简体中文](README.zh.md)
+[English](README.md)|简体中文
 
 # steamapi
-steamapi is a Steam Web API Go package,By using it, you can easily interact with the Steam web API.
+steamapi 是一个由go编写的 Steam Web API 客户端库，通过它你可以很轻松的与Steam Web API进行交互。
 
 
 
-## Install
+## 安装
 ```sh
 go get github.com/246859/steamapi
 ```
 
 
 
-## Supported Interface
+## 支持的接口
 
 - ISteamWebAPIUtil
 
 
 
-## Example
+## 示例
 
-**GetServerInfo** interface has no apikey required, but you should pass a key still.In this case, 
-you can pass a steamapi.NopKey to New func which just a meaningless string.
+**GetServerInfo** 接口即便不需要api key也能使用，但你仍然需要传递一个可以给client，
+为此，你可以使用`steamapi.NopKey`来代替，它只是一个无意义的字符串。该接口可以获取服务的简单信息，通常是用来确认steam服务器能否正常访问。
 
 ```go
 // initialize client with NopKey
@@ -36,14 +36,14 @@ if err != nil {
 }
 fmt.Printf("%+v", info)
 ```
-output
+输出
 ```
 { ServerTime: 1693832041 ServerTimeString: Mon Sep  4 05:54:01 2023 }
 ```
 
 
 
-**GetSupportedAPIList** interface needs to pass your own apikey
+**GetSupportedAPIList** 接口需要使用你自己注册的api key，否则无法使用。该接口可以获取你的key所能支持使用的所有API列表
 
 ```go
 
@@ -58,7 +58,7 @@ if err != nil {
 }
 fmt.Printf("%+v", list)
 ```
-output
+输出
 ```
 {ApiList:{Interfaces:[{Name:IClientStats_1046930 Methods:[{Name:ReportEvent Version:1 HttpMethod:POST Parameters:[]}]} {Name:ICSGOPlayers_730...
 ...
@@ -68,10 +68,10 @@ output
 
 
 
-## Contribute
+## 贡献
 
-1. fork this repository
-2. create you own feature branch
-3. commit your changes
-4. create a pull request to this repository
-5. waiting pr to be merged
+1. fork本仓库
+2. 创建你自己的分支
+3. 提交修改
+4. 向本仓库发起pr
+5. 等待合并
