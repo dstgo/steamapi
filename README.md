@@ -5,7 +5,7 @@ English|[简体中文](./README.zh.md)
 ![GitHub](https://img.shields.io/github/license/246859/steamapi?color=red)
 
 steamapi is a Steam Web API Go package,By using it, you can easily interact with the Steam web API.
-The original Steam API address is [Steam Web API](https://partner.steamgames.com/doc/webapi), but you can also go to [steamapi doc](https://apifox.com/apidoc/shared-1a2822b1-0e88-4df1-b7ad-08acfd783cf2)
+The original Steam API address is [Steam Web API](https://partner.steamgames.com/doc/webapi), but you can also go to [steamapi doc](https://apifox.com/apidoc/shared-dc407840-4437-48c8-addc-02278981d60a)
 View interface documents, support preview interface response and online debugging.
 
 
