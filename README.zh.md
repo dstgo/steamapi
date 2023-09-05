@@ -1,4 +1,4 @@
-[English](README.md)|简体中文
+[English](./README.md)|简体中文
 
 # steamapi
 steamapi 是一个由go编写的 Steam Web API 客户端库，通过它你可以很轻松的与Steam Web API进行交互。

@@ -1,4 +1,4 @@
-English|[简体中文](README.zh.md)
+English|[简体中文](./README.zh.md)
 
 # steamapi
 steamapi is a Steam Web API Go package,By using it, you can easily interact with the Steam web API.
