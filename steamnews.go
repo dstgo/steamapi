@@ -4,6 +4,10 @@ import (
 	"github.com/246859/steamapi/types/steamnews"
 )
 
+func (c *Client) ISteamNews() *ISteamNews {
+	return &ISteamNews{c}
+}
+
 type ISteamNews struct {
 	c *Client
 }
@@ -11,14 +15,9 @@ type ISteamNews struct {
 // GetNewsForApp see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
 func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
 	var newsList steamnews.AppNewsList
-	queryForm, err := structToMap(query)
-	if err != nil {
-		return newsList, err
-	}
-	request := i.c.Get(PublicHost, steamnews.URLGetNewsForApp, joinRequestOptions(ops, WithRequestQuery(queryForm))...)
+	request := i.c.Get(PublicHost, steamnews.URLGetNewsForApp, joinRequestOptions(ops, WithRequestQuery(query))...)
 	request.SetResult(&newsList)
-	_, err = request.Send()
-	if err != nil {
+	if _, err := request.Send(); err != nil {
 		return newsList, err
 	}
 	return newsList, nil

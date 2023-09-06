@@ -4,25 +4,20 @@ import (
 	"github.com/246859/steamapi/types/publishedfile"
 )
 
-func (c *Client) PublishedFiles() *ISteamPublishedFilesService {
-	return &ISteamPublishedFilesService{c: c}
+func (c *Client) IPublishedFileService() *ISteamPublishedFileService {
+	return &ISteamPublishedFileService{c: c}
 }
 
-type ISteamPublishedFilesService struct {
+type ISteamPublishedFileService struct {
 	c *Client
 }
 
 // QueryFiles see https://partner.steamgames.com/doc/webapi/IPublishedFileService#QueryFiles
-func (i ISteamPublishedFilesService) QueryFiles(queryFileRequest publishedfile.FileQueryOption, options ...RequestOptions) (publishedfile.FileList, error) {
+func (i ISteamPublishedFileService) QueryFiles(queryFileOption publishedfile.FileQueryOption, options ...RequestOptions) (publishedfile.FileList, error) {
 	var response publishedfile.FileList
-	queryform, err := structToMap(queryFileRequest)
-	if err != nil {
-		return response, err
-	}
-	options = joinRequestOptions(options, WithRequestQuery(queryform))
-	request := i.c.Get(PublicHost, publishedfile.URLQueryFiles, options...)
+	request := i.c.Get(PublicHost, publishedfile.URLQueryFiles, joinRequestOptions(options, WithRequestQuery(queryFileOption))...)
 	request.SetResult(&response)
-	if _, err = request.Send(); err != nil {
+	if _, err := request.Send(); err != nil {
 		return response, err
 	}
 	return response, nil
