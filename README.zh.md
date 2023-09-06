@@ -15,7 +15,12 @@ go get github.com/246859/steamapi
 ```
 
 ## 支持的接口
+由于host是`partner.steam-api.com`的接口需要发行商密钥才能够调用，
+而发行商密钥必须要100$才能注册，所以我们没法去获取它的具体响应是什么，
+于是接口统一返回类型为`map[string]any`
 
+- IPublishedFileService
+- ISteamNews
 - ISteamWebAPIUtil
 
 

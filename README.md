@@ -17,6 +17,10 @@ go get github.com/246859/steamapi
 
 ## Supported Interface
 
+Since the host is `partner.steam-api.com`, the interface needs the publisher key to call, and the publisher key must be 100$ to register, so we have no way to get its specific response, so the interface The unified return type is `map[string]any`
+
+- IPublishedFileService
+- ISteamNews
 - ISteamWebAPIUtil
 
 
