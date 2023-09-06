@@ -5,8 +5,7 @@
 ![GitHub](https://img.shields.io/github/license/246859/steamapi?color=red)
 
 steamapi 是一个由go编写的 Steam Web API 客户端库，通过它你可以很轻松的与Steam Web API进行交互。
-原Steam API的地址在[Steam Web API](https://partner.steamgames.com/doc/webapi)，但是你也可以前往[steamapi doc](https://apifox.com/apidoc/shared-1a2822b1-0e88-4df1-b7ad-08acfd783cf2)
-查看接口文档，支持预览接口响应和在线调试。
+原Steam API的地址在[Steam Web API](https://partner.steamgames.com/doc/webapi)
 
 
 ## 安装
@@ -21,6 +20,7 @@ go get github.com/246859/steamapi
 
 - IPublishedFileService
 - ISteamNews
+- ISteamUser
 - ISteamWebAPIUtil
 
 
