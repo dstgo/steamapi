@@ -2,7 +2,7 @@ package publishedfile
 
 import "github.com/246859/steamapi/types/steam"
 
-type QueryFileRequest struct {
+type FileQueryOption struct {
 	Key                    string                  `json:"key" mapstructure:"key"`
 	Language               steam.LanguageCode      `json:"language" mapstructure:"language"`
 	QueryType              EPublishedFileQueryType `json:"query_type" mapstructure:"query_type"`
@@ -35,7 +35,7 @@ type QueryFileRequest struct {
 	ReturnPlayTimeStats    uint                    `json:"return_playtime_stats" mapstructure:"return_playtime_stats"`
 }
 
-type QueryFileDetails struct {
+type FileList struct {
 	Response struct {
 		Total                int    `json:"total"`
 		PublishedFileDetails []File `json:"publishedfiledetails"`

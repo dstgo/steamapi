@@ -1,6 +1,7 @@
 package steamapi
 
 import (
+	"github.com/246859/steamapi/types/steam"
 	"github.com/246859/steamapi/types/webapiutil"
 )
 
@@ -25,9 +26,13 @@ func (i *ISteamWebAPIUtil) GetServerInfo(options ...RequestOptions) (webapiutil.
 }
 
 // GetSupportedAPIList see https://partner.steamgames.com/doc/webapi/ISteamWebAPIUtil#GetSupportedAPIList
-func (i *ISteamWebAPIUtil) GetSupportedAPIList(options ...RequestOptions) (webapiutil.SteamApiList, error) {
+func (i *ISteamWebAPIUtil) GetSupportedAPIList(key steam.APIKey, options ...RequestOptions) (webapiutil.SteamApiList, error) {
 	var list webapiutil.SteamApiList
-	request := i.c.Get(PublicHost, webapiutil.URLGetSupportedAPIList, options...)
+	query, err := structToMap(key)
+	if err != nil {
+		return list, err
+	}
+	request := i.c.Get(PublicHost, webapiutil.URLGetSupportedAPIList, joinRequestOptions(options, WithRequestQuery(query))...)
 	request.SetResult(&list)
 	if _, err := request.Send(); err != nil {
 		return list, err

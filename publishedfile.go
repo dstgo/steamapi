@@ -13,8 +13,8 @@ type ISteamPublishedFilesService struct {
 }
 
 // QueryFiles see https://partner.steamgames.com/doc/webapi/IPublishedFileService#QueryFiles
-func (i ISteamPublishedFilesService) QueryFiles(queryFileRequest publishedfile.QueryFileRequest, options ...RequestOptions) (publishedfile.QueryFileDetails, error) {
-	var response publishedfile.QueryFileDetails
+func (i ISteamPublishedFilesService) QueryFiles(queryFileRequest publishedfile.FileQueryOption, options ...RequestOptions) (publishedfile.FileList, error) {
+	var response publishedfile.FileList
 	queryform, err := structToMap(queryFileRequest)
 	if err != nil {
 		return response, err

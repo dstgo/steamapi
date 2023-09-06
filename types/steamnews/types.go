@@ -1,23 +1,25 @@
 package steamnews
 
-type AppNewsQuery struct {
-	AppId     uint   `json:"appid" mapstructure:"appid"`
+import "github.com/246859/steamapi/types/steam"
+
+type AppNewsQueryOption struct {
+	steam.AppId
 	MaxLength uint   `json:"maxlength"  mapstructure:"maxlength"`
 	EndDate   uint   `json:"enddate" mapstructure:"enddate"`
 	Count     uint   `json:"count" mapstructure:"count"`
 	Feeds     string `json:"feeds" mapstructure:"feeds"`
 }
 
-type AppNewsQueryList struct {
+type AppNewsList struct {
 	AppNews struct {
-		AppId     uint      `json:"appid"`
+		steam.AppId
 		NewsItems []AppNews `json:"newsitems"`
 	} `json:"appnews"`
 }
 
 type AppNews struct {
+	steam.AppId
 	Gid           string   `json:"gid"`
-	AppId         uint     `json:"appid"`
 	Title         string   `json:"title"`
 	Url           string   `json:"url"`
 	IsExternalUrl bool     `json:"is_external_url"`

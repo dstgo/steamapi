@@ -9,8 +9,8 @@ type ISteamNews struct {
 }
 
 // GetNewsForApp see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
-func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQuery, ops ...RequestOptions) (steamnews.AppNewsQueryList, error) {
-	var newsList steamnews.AppNewsQueryList
+func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
+	var newsList steamnews.AppNewsList
 	queryForm, err := structToMap(query)
 	if err != nil {
 		return newsList, err
@@ -25,6 +25,6 @@ func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQuery, ops ...RequestO
 }
 
 // GetNewsForAppAuthed see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForAppAuthed
-func (i *ISteamNews) GetNewsForAppAuthed(query steamnews.AppNewsQuery, ops ...RequestOptions) (steamnews.AppNewsQueryList, error) {
+func (i *ISteamNews) GetNewsForAppAuthed(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
 	return i.GetNewsForApp(query, joinRequestOptions(ops, WithRequestHost(PartnerHost), WithRequestURL(steamnews.URLGetNewsForAppAuthed))...)
 }
