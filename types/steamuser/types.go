@@ -64,6 +64,12 @@ type PublisherAppOwnership struct {
 	AppOwnership
 }
 
+type PublisherAppOwnershipList struct {
+	AppOwnership struct {
+		Apps []PublisherAppOwnership `json:"apps"`
+	} `json:"appownership"`
+}
+
 type AppOwnershipChanges struct {
 	OwnershipChanges struct {
 		SteamIds          steam.SteamIdString `json:"steamids"`
