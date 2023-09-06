@@ -11,6 +11,7 @@ var (
 
 const (
 	NopKey           = "nop-key"
+	EmptyKey         = ""
 	QuerySteamApiKey = "key"
 	QueryLanguage    = "language"
 )
@@ -19,7 +20,7 @@ type Options func(client *Client)
 
 func WithKey(key string) Options {
 	return func(c *Client) {
-		c.key = key
+		c.cfg.key = key
 	}
 }
 
@@ -29,20 +30,23 @@ func WithResty(client *resty.Client) Options {
 	}
 }
 
-func WithHttps(https bool) Options {
+func WithHttps() Options {
 	return func(c *Client) {
-		c.https = https
+		c.cfg.https = true
 	}
 }
 
 // Client
 // steam api client, interact with steam api server
 type Client struct {
-	key    string
-	https  bool
+	cfg    ClientCfg
 	client *resty.Client
+}
 
-	baseurl string
+type ClientCfg struct {
+	key      string
+	https    bool
+	language string
 }
 
 // New func create a new Client only with api key which must be provided,
@@ -64,7 +68,7 @@ func NewWith(options ...Options) (*Client, error) {
 	}
 
 	// key must be provided
-	if len(client.key) == 0 {
+	if len(client.cfg.key) == 0 {
 		return client, ApiKeyNotExistErr
 	}
 

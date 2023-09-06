@@ -1,6 +1,7 @@
 package steamapi
 
 import (
+	"errors"
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/cast"
 	"net/http"
@@ -16,20 +17,25 @@ const (
 	PartnerHost = "partner.steam-api.com"
 )
 
+var (
+	PartnerEnforceHttpsErr = errors.New("partner.steam-api.com must be requested with https")
+)
+
 type Request struct {
-	Https     bool
 	Host      string
 	Method    string
 	Url       string
 	QueryForm map[string]any
 	Body      any
 	Header    http.Header
+	err       error
 
+	cfg ClientCfg
 	*resty.Request
 }
 
 func (r *Request) FullURL() string {
-	if r.Https {
+	if r.cfg.https {
 		return "https://" + path.Join(r.Host, r.Url)
 	}
 	return "http://" + path.Join(r.Host, r.Url)
@@ -53,6 +59,9 @@ func (r *Request) Attach(req *resty.Request) {
 }
 
 func (r *Request) Send() (*resty.Response, error) {
+	if r.err != nil {
+		return nil, r.err
+	}
 	rawResponse, err := r.Request.Send()
 	if err != nil {
 		return nil, err
@@ -79,12 +88,6 @@ func WithRequestHost(host string) RequestOptions {
 	}
 }
 
-func WithRequestHttps(https bool) RequestOptions {
-	return func(request *Request) {
-		request.Https = https
-	}
-}
-
 func WithRequestURL(url string) RequestOptions {
 	return func(request *Request) {
 		request.Url = url
@@ -97,9 +100,20 @@ func WithRequestFn(fn func(r *resty.Request)) RequestOptions {
 	}
 }
 
-func WithRequestQuery(query map[string]any) RequestOptions {
+func WithRequestQueryMap(query map[string]any) RequestOptions {
 	return func(request *Request) {
 		request.QueryForm = query
+	}
+}
+
+func WithRequestQuery(query any) RequestOptions {
+	return func(request *Request) {
+		form, err := toMap(query)
+		if err != nil {
+			request.err = err
+			return
+		}
+		request.QueryForm = form
 	}
 }
 
@@ -118,7 +132,9 @@ func WithRequestHeaders(header http.Header) RequestOptions {
 // NewRequest creates a new request, you can use options to customize request configuration
 func (c *Client) NewRequest(method, host, url string, options ...RequestOptions) *Request {
 
-	r := &Request{}
+	r := &Request{
+		cfg: c.cfg,
+	}
 
 	// apply options
 	for _, apply := range options {
@@ -137,12 +153,22 @@ func (c *Client) NewRequest(method, host, url string, options ...RequestOptions)
 		r.Method = method
 	}
 
+	// PartnerHost must be request by https
+	if r.Host == PartnerHost && !r.cfg.https {
+		r.err = PartnerEnforceHttpsErr
+		return r
+	}
+
 	newReq := c.client.R()
 
 	r.Attach(newReq)
 
 	if !r.Request.QueryParam.Has(QuerySteamApiKey) || len(r.Request.QueryParam.Get(QuerySteamApiKey)) == 0 {
-		r.Request.SetQueryParam(QuerySteamApiKey, c.key)
+		r.Request.SetQueryParam(QuerySteamApiKey, c.cfg.key)
+	}
+
+	if !r.Request.QueryParam.Has(QueryLanguage) || len(r.Request.QueryParam.Get(QueryLanguage)) == 0 {
+		r.Request.SetQueryParam(QueryLanguage, r.cfg.language)
 	}
 
 	return r
