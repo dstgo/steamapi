@@ -39,7 +39,7 @@ func checkRespStatus(resp *resty.Response) error {
 	return nil
 }
 
-func structToMap(in any) (map[string]any, error) {
+func toMap(in any) (map[string]any, error) {
 	out := make(map[string]any, 10)
 	if err := mapstructure.Decode(in, &out); err != nil {
 		return out, err
