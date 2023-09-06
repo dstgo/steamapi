@@ -17,7 +17,7 @@ func TestQueryFile(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	files, err := client.PublishedFiles().QueryFiles(publishedfile.FileQueryOption{
+	files, err := client.IPublishedFileService().QueryFiles(publishedfile.FileQueryOption{
 		Page:       1,
 		NumPerPage: 10,
 		AppID:      108600,

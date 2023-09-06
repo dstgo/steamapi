@@ -28,7 +28,7 @@ func TestGetUserInfo(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	info, err := client.WebApiUtil().GetServerInfo()
+	info, err := client.ISteamWebAPIUtil().GetServerInfo()
 	if err != nil {
 		t.Error(err)
 	}
@@ -44,7 +44,7 @@ func TestGetSupportedAPIList(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	list, err := client.WebApiUtil().GetSupportedAPIList()
+	list, err := client.ISteamWebAPIUtil().GetSupportedAPIList("")
 	if err != nil {
 		t.Error(err)
 	}
