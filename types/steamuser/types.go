@@ -1,46 +1,36 @@
 package steamuser
 
-import "github.com/246859/steamapi/types/steam"
-
-type SteamApiIdOption struct {
-	steam.APIKey
-	steam.SteamId
+type OwnershipQueryOption struct {
+	Key     string `json:"key" mapstructure:"key"`
+	SteamId uint64 `json:"steamid" mapstructure:"steamid"`
+	AppId   uint32 `json:"appid" mapstructure:"appid"`
 }
 
-type SteamApiIdsOption struct {
-	steam.APIKey
-	steam.SteamIds
-}
-
-type AppOwnershipOption struct {
-	SteamApiIdOption
-	steam.AppId
-}
-
-type AppsOwnershipOption struct {
-	SteamApiIdOption
-	steam.AppIds
+type AppPriceInfoQueryOption struct {
+	Key     string `json:"key" mapstructure:"key"`
+	SteamId uint64 `json:"steamid" mapstructure:"steamid"`
+	AppIds  string `json:"appids" mapstructure:"appids"`
 }
 
 type DeletedSteamIdsQueryOption struct {
-	steam.APIKey
+	Key        string `json:"key" mapstructure:"key"`
 	RowVersion uint64 `json:"rowersion" mapstructure:"rowersion"`
 }
 
 type FriendListQueryOption struct {
-	steam.APIKey
-	steam.SteamId
+	Key          string `json:"key" mapstructure:"key"`
+	SteamId      uint64 `json:"steamid" mapstructure:"steamid"`
 	Relationship string `json:"relationship" mapstructure:"relationship"`
 }
 
 type ResolveVanityUrlQueryOption struct {
-	steam.APIKey
+	Key       string `json:"key" mapstructure:"key"`
 	VanityUrl string `json:"vanityurl" mapstructure:"vanityurl"`
 	UrlType   int    `json:"urltype" mapstructure:"urltype"`
 }
 
 type PublisherAppOwnershipChangeQueryOption struct {
-	steam.APIKey
+	Key               string `json:"key" mapstructure:"key"`
 	PackageRowVersion string `json:"packagerowversion" mapstructure:"packagerowversion"`
 	CdKeyRowVersion   string `json:"cdkeyRowversion" mapstructure:"cdkeyRowversion"`
 }
@@ -60,7 +50,7 @@ type AppOwnership struct {
 }
 
 type PublisherAppOwnership struct {
-	steam.AppId
+	SteamId uint64 `json:"steamid" mapstructure:"steamid"`
 	AppOwnership
 }
 
@@ -72,10 +62,10 @@ type PublisherAppOwnershipList struct {
 
 type AppOwnershipChanges struct {
 	OwnershipChanges struct {
-		SteamIds          steam.SteamIdString `json:"steamids"`
-		PackageRowVersion string              `json:"packagerowversion" mapstructure:"packagerowversion"`
-		CdKeyRowVersion   string              `json:"cdkeyRowversion" mapstructure:"cdkeyRowversion"`
-		MoreData          bool                `json:"moredata" mapstructure:"moredata"`
+		SteamIds          string `json:"steamids" mapstructure:"steamids"`
+		PackageRowVersion string `json:"packagerowversion" mapstructure:"packagerowversion"`
+		CdKeyRowVersion   string `json:"cdkeyRowversion" mapstructure:"cdkeyRowversion"`
+		MoreData          bool   `json:"moredata" mapstructure:"moredata"`
 	}
 }
 
