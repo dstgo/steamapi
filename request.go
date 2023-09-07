@@ -136,6 +136,11 @@ func (c *Client) NewRequest(method, host, url string, options ...RequestOptions)
 		cfg: c.cfg,
 	}
 
+	if err := checkMethod(method); err != nil {
+		r.err = err
+		return r
+	}
+
 	// apply options
 	for _, apply := range options {
 		apply(r)
