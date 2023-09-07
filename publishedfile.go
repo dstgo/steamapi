@@ -14,11 +14,11 @@ type ISteamPublishedFileService struct {
 
 // QueryFiles see https://partner.steamgames.com/doc/webapi/IPublishedFileService#QueryFiles
 func (i ISteamPublishedFileService) QueryFiles(queryFileOption publishedfile.FileQueryOption, options ...RequestOptions) (publishedfile.FileList, error) {
-	var response publishedfile.FileList
-	request := i.c.Get(PublicHost, publishedfile.URLQueryFiles, joinRequestOptions(options, WithRequestQuery(queryFileOption))...)
-	request.SetResult(&response)
-	if _, err := request.Send(); err != nil {
-		return response, err
+	var fileList publishedfile.FileList
+	_, err := i.c.Get(PublicHost, publishedfile.URLQueryFiles, &fileList,
+		joinRequestOptions(options, WithRequestQuery(queryFileOption))...)
+	if err != nil {
+		return fileList, err
 	}
-	return response, nil
+	return fileList, nil
 }

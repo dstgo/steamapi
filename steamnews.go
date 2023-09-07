@@ -15,9 +15,8 @@ type ISteamNews struct {
 // GetNewsForApp see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
 func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
 	var newsList steamnews.AppNewsList
-	request := i.c.Get(PublicHost, steamnews.URLGetNewsForApp, joinRequestOptions(ops, WithRequestQuery(query))...)
-	request.SetResult(&newsList)
-	if _, err := request.Send(); err != nil {
+	_, err := i.c.Get(PublicHost, steamnews.URLGetNewsForApp, &newsList, joinRequestOptions(ops, WithRequestQuery(query))...)
+	if err != nil {
 		return newsList, err
 	}
 	return newsList, nil
