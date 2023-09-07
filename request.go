@@ -68,7 +68,7 @@ func (r *Request) Send() (*resty.Response, error) {
 		return nil, err
 	}
 	if err := checkRespStatus(rawResponse); err != nil {
-		return nil, err
+		return nil, errors.Join(err, errors.New(string(rawResponse.Body())))
 	}
 	return rawResponse, nil
 }
