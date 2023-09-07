@@ -60,23 +60,3 @@ func toMap(in any) (map[string]any, error) {
 func joinRequestOptions(options []RequestOptions, ops ...RequestOptions) []RequestOptions {
 	return append(ops, options...)
 }
-
-// SendRequest this is a helper func to send a request, resultPtr must be a pointer.
-func SendRequest(c *Client, method, host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
-	if c == nil {
-		return nil, errors.New("client must be not nil")
-	}
-	newRequest := c.NewRequest(method, host, url, opts...)
-	newRequest.SetResult(&resultPtr)
-	rawResponse, err := newRequest.Send()
-	if err != nil {
-		return nil, err
-	}
-	return rawResponse, nil
-}
-
-func SendCommonRequest(c *Client, method, host, url string, opts ...RequestOptions) (steam.CommonResponse, error) {
-	commonResponse := steam.CommonResponse{}
-	_, err := SendRequest(c, method, host, url, &commonResponse, opts...)
-	return commonResponse, err
-}

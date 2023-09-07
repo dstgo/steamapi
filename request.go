@@ -2,6 +2,7 @@ package steamapi
 
 import (
 	"errors"
+	"github.com/246859/steamapi/types/steam"
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/cast"
 	"net/http"
@@ -179,22 +180,34 @@ func (c *Client) NewRequest(method, host, url string, options ...RequestOptions)
 	return r
 }
 
-func (c *Client) Get(host, url string, options ...RequestOptions) *Request {
-	return c.NewRequest(http.MethodGet, host, url, options...)
+// SendRequest this is a helper func to send a request, resultPtr must be a pointer.
+func (c *Client) SendRequest(method, host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+	if c == nil {
+		return nil, errors.New("client must be not nil")
+	}
+	// build new request
+	newRequest := c.NewRequest(method, host, url, opts...)
+	// bind result
+	newRequest.SetResult(&resultPtr)
+	// send request
+	rawResponse, err := newRequest.Send()
+	if err != nil {
+		return nil, err
+	}
+	return rawResponse, nil
 }
 
-func (c *Client) Post(host, url string, options ...RequestOptions) *Request {
-	return c.NewRequest(http.MethodPost, host, url, options...)
+func (c *Client) Get(host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+	return c.SendRequest(http.MethodGet, host, url, resultPtr, opts...)
 }
 
-func (c *Client) Delete(host, url string, options ...RequestOptions) *Request {
-	return c.NewRequest(http.MethodDelete, host, url, options...)
+func (c *Client) Post(host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+	return c.SendRequest(http.MethodPost, host, url, resultPtr, opts...)
 }
 
-func (c *Client) Put(host, url string, options ...RequestOptions) *Request {
-	return c.NewRequest(http.MethodPut, host, url, options...)
-}
-
-func (c *Client) Options(host, url string, options ...RequestOptions) *Request {
-	return c.NewRequest(http.MethodOptions, host, url, options...)
+// Unknown some interfaces response are unknown, so return steam.CommonResponse that is alias of map[string]any
+func (c *Client) Unknown(method, host, url string, opts ...RequestOptions) (steam.CommonResponse, error) {
+	commonResponse := steam.CommonResponse{}
+	_, err := c.SendRequest(method, host, url, &commonResponse, opts...)
+	return commonResponse, err
 }
