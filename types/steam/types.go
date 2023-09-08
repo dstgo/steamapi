@@ -22,6 +22,10 @@ type SteamId struct {
 	SteamId uint64 `json:"steamid" mapstructure:"steamid"`
 }
 
+type SteamIdString struct {
+	SteamId string `json:"steamid" mapstructure:"steamid"`
+}
+
 // Ids join several uint id with the ","
 func Ids(ids ...uint64) string {
 	var res []string

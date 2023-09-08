@@ -16,7 +16,7 @@ type ISteamUser struct {
 }
 
 // CheckAppOwnership see https://partner.steamgames.com/doc/webapi/ISteamUser#CheckAppOwnership
-func (i *ISteamUser) CheckAppOwnership(key string, steamId uint64, appId uint32, ops ...RequestOptions) (steamuser.AppOwnershipList, error) {
+func (i *ISteamUser) CheckAppOwnership(key string, steamId uint, appId uint32, ops ...RequestOptions) (steamuser.AppOwnershipList, error) {
 	var appOwnership steamuser.AppOwnershipList
 	queryOption := steamuser.OwnershipQueryOption{
 		Key: key, AppId: appId, SteamId: steamId,
@@ -30,7 +30,7 @@ func (i *ISteamUser) CheckAppOwnership(key string, steamId uint64, appId uint32,
 }
 
 // GetAppPriceInfo see https://partner.steamgames.com/doc/webapi/ISteamUser#GetAppPriceInfo
-func (i *ISteamUser) GetAppPriceInfo(key string, steamId uint64, appIds string, ops ...RequestOptions) (steam.CommonResponse, error) {
+func (i *ISteamUser) GetAppPriceInfo(key string, steamId uint, appIds string, ops ...RequestOptions) (steam.CommonResponse, error) {
 	queryOption := steamuser.AppPriceInfoQueryOption{
 		Key: key, SteamId: steamId, AppIds: appIds,
 	}
@@ -39,7 +39,7 @@ func (i *ISteamUser) GetAppPriceInfo(key string, steamId uint64, appIds string, 
 }
 
 // GetDeletedSteamIds see https://partner.steamgames.com/doc/webapi/ISteamUser#GetDeletedSteamIds
-func (i *ISteamUser) GetDeletedSteamIds(key string, rowVersion uint64, ops ...RequestOptions) (steam.CommonResponse, error) {
+func (i *ISteamUser) GetDeletedSteamIds(key string, rowVersion uint, ops ...RequestOptions) (steam.CommonResponse, error) {
 	queryOption := steamuser.DeletedSteamIdsQueryOption{
 		Key: key, RowVersion: rowVersion,
 	}
@@ -48,7 +48,7 @@ func (i *ISteamUser) GetDeletedSteamIds(key string, rowVersion uint64, ops ...Re
 }
 
 // GetFriendList see https://partner.steamgames.com/doc/webapi/ISteamUser#GetFriendList
-func (i *ISteamUser) GetFriendList(key string, steamId uint64, relationship string, ops ...RequestOptions) (steam.CommonResponse, error) {
+func (i *ISteamUser) GetFriendList(key string, steamId uint, relationship string, ops ...RequestOptions) (steam.CommonResponse, error) {
 	queryOption := steamuser.FriendListQueryOption{
 		Key: key, SteamId: steamId, Relationship: relationship,
 	}
@@ -81,7 +81,7 @@ func (i *ISteamUser) GetPlayerSummaries(key string, steamids string, ops ...Requ
 }
 
 // GetPublisherAppOwnership see https://partner.steamgames.com/doc/webapi/ISteamUser#GetPublisherAppOwnership
-func (i *ISteamUser) GetPublisherAppOwnership(key string, steamId uint64, ops ...RequestOptions) (steamuser.PublisherAppOwnershipList, error) {
+func (i *ISteamUser) GetPublisherAppOwnership(key string, steamId uint, ops ...RequestOptions) (steamuser.PublisherAppOwnershipList, error) {
 	var publisherAppOwnership steamuser.PublisherAppOwnershipList
 	queryOption := steamuser.SteamIdQueryOption{
 		Key: key, SteamId: steamId,
@@ -106,7 +106,7 @@ func (i *ISteamUser) GetPublisherAppOwnershipChanges(chaneQueryOption steamuser.
 }
 
 // GetUserGroupList see https://partner.steamgames.com/doc/webapi/ISteamUser#GetUserGroupList
-func (i *ISteamUser) GetUserGroupList(key string, steamId uint64, ops ...RequestOptions) (steam.CommonResponse, error) {
+func (i *ISteamUser) GetUserGroupList(key string, steamId uint, ops ...RequestOptions) (steam.CommonResponse, error) {
 	queryOption := steamuser.SteamIdQueryOption{Key: key, SteamId: steamId}
 	return i.c.Unknown(http.MethodGet, PartnerHost, steamuser.URLGetUserGroupList,
 		joinRequestOptions(ops, WithRequestQuery(queryOption))...)

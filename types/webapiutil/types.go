@@ -1,7 +1,7 @@
 package webapiutil
 
 type ServerInfo struct {
-	ServerTime       uint64 `json:"servertime"`
+	ServerTime       uint   `json:"servertime"`
 	ServerTimeString string `json:"servertimestring"`
 }
 
