@@ -3,6 +3,7 @@ package steamapi
 import (
 	"errors"
 	"github.com/246859/steamapi/types/steam"
+	"github.com/asaskevich/govalidator"
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/cast"
 	"net/http"
@@ -114,12 +115,22 @@ func WithRequestQuery(query any) RequestOptions {
 			request.err = err
 			return
 		}
+		ok, err := govalidator.ValidateStruct(query)
+		if !ok {
+			request.err = err
+			return
+		}
 		request.QueryForm = form
 	}
 }
 
 func WithRequestBody(body any) RequestOptions {
 	return func(request *Request) {
+		ok, err := govalidator.ValidateStruct(body)
+		if !ok {
+			request.err = err
+			return
+		}
 		request.Body = body
 	}
 }
