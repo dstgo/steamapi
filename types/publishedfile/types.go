@@ -120,3 +120,36 @@ type FileVoteData struct {
 	VoteUp   int     `json:"vote_up"`
 	VoteDown int     `json:"vote_down"`
 }
+
+type DeveloperMetaSetOption struct {
+	PublishFileId uint   `json:"publishfileid" valid:"required"`
+	AppId         uint   `json:"appid" valid:"required"`
+	MeataData     string `json:"meatadata" valid:"required"`
+}
+
+type AppUGCBanUpdateOption struct {
+	SteamId        uint   `json:"steamid" valid:"required"`
+	AppId          uint   `json:"appid" valid:"required"`
+	ExpirationTime uint   `json:"expirationtime" valid:"required"`
+	Reason         string `json:"reason"`
+}
+
+type BanStatusUpdateOption struct {
+	PublishFileId uint   `json:"publishfileid" valid:"required"`
+	AppId         uint   `json:"appid" valid:"required"`
+	Banned        bool   `json:"banned"`
+	Reason        string `json:"reason" valid:"required"`
+}
+
+type IncompatibleStatusUpdateOption struct {
+	PublishFileId uint `json:"publishfileid" valid:"required"`
+	AppId         uint `json:"appid" valid:"required"`
+	Incompatible  bool `json:"incompatible"`
+}
+
+type TagUpdateOption struct {
+	PublishFileId uint   `json:"publishfileid" valid:"required"`
+	AppId         uint   `json:"appid" valid:"required"`
+	AddTags       string `json:"add_tags"`
+	RemoveTags    string `json:"remove_tags"`
+}
