@@ -1,27 +1,9 @@
 package test
 
 import (
-	"encoding/json"
 	"github.com/246859/steamapi"
-	"os"
 	"testing"
 )
-
-func readFileKey() (string, error) {
-	bytes, err := os.ReadFile("testdata/steamapi.key")
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
-}
-
-func prettyJsonResp(v any) string {
-	bytes, err := json.MarshalIndent(v, "", "\t")
-	if err != nil {
-		return ""
-	}
-	return string(bytes)
-}
 
 func TestGetUserInfo(t *testing.T) {
 	client, err := steamapi.New(steamapi.NopKey)
@@ -36,7 +18,7 @@ func TestGetUserInfo(t *testing.T) {
 }
 
 func TestGetSupportedAPIList(t *testing.T) {
-	key, err := readFileKey()
+	key, err := readFileKey("testdata/steamapi.key")
 	if err != nil {
 		t.Error(err)
 	}

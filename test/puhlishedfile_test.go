@@ -9,7 +9,7 @@ import (
 )
 
 func TestQueryFile(t *testing.T) {
-	key, err := readFileKey()
+	key, err := readFileKey("testdata/steamapi.key")
 	if err != nil {
 		panic(err)
 	}
