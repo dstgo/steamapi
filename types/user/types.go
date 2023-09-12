@@ -1,4 +1,4 @@
-package steamuser
+package user
 
 import "github.com/246859/steamapi/types/steam"
 

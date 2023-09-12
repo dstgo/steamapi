@@ -26,6 +26,22 @@ type SteamIdString struct {
 	SteamId string `json:"steamid" mapstructure:"steamid"`
 }
 
+type ApiKeyId struct {
+	Key     string `json:"key" mapstructure:"key"`
+	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
+}
+
+type AppKeyId struct {
+	Key   string `json:"key" mapstructure:"key"`
+	AppId uint   `json:"appid" mapstructure:"appid" valid:"required"`
+}
+
+type SteamAppKeyId struct {
+	Key     string `json:"key" mapstructure:"key"`
+	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
+	AppId   uint   `json:"appid" mapstructure:"appid" valid:"required"`
+}
+
 // Ids join several uint id with the ","
 func Ids(ids ...uint64) string {
 	var res []string

@@ -1,4 +1,4 @@
-package steamnews
+package news
 
 import "github.com/246859/steamapi/types/steam"
 

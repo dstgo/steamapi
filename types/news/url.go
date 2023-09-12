@@ -1,4 +1,4 @@
-package steamnews
+package news
 
 const (
 	URLGetNewsForApp       = "/ISteamNews/GetNewsForApp/v2/"

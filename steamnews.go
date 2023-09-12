@@ -1,7 +1,7 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/steamnews"
+	"github.com/246859/steamapi/types/news"
 )
 
 func (c *Client) ISteamNews() *ISteamNews {
@@ -13,9 +13,9 @@ type ISteamNews struct {
 }
 
 // GetNewsForApp see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
-func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
-	var newsList steamnews.AppNewsList
-	_, err := i.c.Get(PublicHost, steamnews.URLGetNewsForApp, &newsList, joinRequestOptions(ops, WithRequestQuery(query))...)
+func (i *ISteamNews) GetNewsForApp(query news.AppNewsQueryOption, ops ...RequestOptions) (news.AppNewsList, error) {
+	var newsList news.AppNewsList
+	_, err := i.c.Get(PublicHost, news.URLGetNewsForApp, &newsList, joinRequestOptions(ops, WithRequestQuery(query))...)
 	if err != nil {
 		return newsList, err
 	}
@@ -23,6 +23,6 @@ func (i *ISteamNews) GetNewsForApp(query steamnews.AppNewsQueryOption, ops ...Re
 }
 
 // GetNewsForAppAuthed see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForAppAuthed
-func (i *ISteamNews) GetNewsForAppAuthed(query steamnews.AppNewsQueryOption, ops ...RequestOptions) (steamnews.AppNewsList, error) {
-	return i.GetNewsForApp(query, joinRequestOptions(ops, WithRequestHost(PartnerHost), WithRequestURL(steamnews.URLGetNewsForAppAuthed))...)
+func (i *ISteamNews) GetNewsForAppAuthed(query news.AppNewsQueryOption, ops ...RequestOptions) (news.AppNewsList, error) {
+	return i.GetNewsForApp(query, joinRequestOptions(ops, WithRequestHost(PartnerHost), WithRequestURL(news.URLGetNewsForAppAuthed))...)
 }

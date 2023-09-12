@@ -1,4 +1,4 @@
-package steamuser
+package user
 
 const (
 	URLCheckAppOwnership               = "/ISteamUser/CheckAppOwnership/v2/"
