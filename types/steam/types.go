@@ -15,31 +15,28 @@ type APIKey struct {
 }
 
 type AppId struct {
-	AppId uint64 `json:"appid" mapstructure:"appid"`
+	AppId uint `json:"appid" mapstructure:"appid"`
 }
 
 type SteamId struct {
-	SteamId uint64 `json:"steamid" mapstructure:"steamid"`
+	SteamId uint `json:"steamid" mapstructure:"steamid"`
 }
 
 type SteamIdString struct {
 	SteamId string `json:"steamid" mapstructure:"steamid"`
 }
 
-type ApiKeyId struct {
-	Key     string `json:"key" mapstructure:"key"`
-	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
+type SteamIds struct {
+	SteamIds string `json:"steamids" mapstructure:"steaids" valid:"required"`
 }
 
-type AppKeyId struct {
-	Key   string `json:"key" mapstructure:"key"`
-	AppId uint   `json:"appid" mapstructure:"appid" valid:"required"`
+type AppIds struct {
+	AppIds string `json:"appids" mapstructure:"appids" valid:"required"`
 }
 
-type SteamAppKeyId struct {
-	Key     string `json:"key" mapstructure:"key"`
-	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
-	AppId   uint   `json:"appid" mapstructure:"appid" valid:"required"`
+type SteamAppId struct {
+	SteamId uint `json:"steamid" mapstructure:"steamid" valid:"required"`
+	AppId   uint `json:"appid" mapstructure:"appid" valid:"required"`
 }
 
 // Ids join several uint id with the ","
