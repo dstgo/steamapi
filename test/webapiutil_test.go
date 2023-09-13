@@ -26,7 +26,7 @@ func TestGetSupportedAPIList(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	list, err := client.ISteamWebAPIUtil().GetSupportedAPIList("")
+	list, err := client.ISteamWebAPIUtil().GetSupportedAPIList()
 	if err != nil {
 		t.Error(err)
 	}
