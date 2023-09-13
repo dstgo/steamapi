@@ -21,6 +21,7 @@ go get github.com/246859/steamapi
 - IPublishedFileService
 - ISteamNews
 - ISteamUser
+- IPlayerService
 - ISteamWebAPIUtil
 
 
