@@ -13,9 +13,10 @@ type ISteamNews struct {
 }
 
 // GetNewsForApp see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForApp
-func (i *ISteamNews) GetNewsForApp(query news.AppNewsQueryOption, ops ...RequestOptions) (news.AppNewsList, error) {
+func (i *ISteamNews) GetNewsForApp(query news.AppNewsQueryOption, ops ...RequestOption) (news.AppNewsList, error) {
 	var newsList news.AppNewsList
-	_, err := i.c.Get(PublicHost, news.URLGetNewsForApp, &newsList, joinRequestOptions(ops, WithRequestQuery(query))...)
+	ops = joinRequestOptions(ops, WithQueryForm(query))
+	_, err := i.c.Get(PublicHost, news.URLGetNewsForApp, &newsList, ops...)
 	if err != nil {
 		return newsList, err
 	}
@@ -23,6 +24,6 @@ func (i *ISteamNews) GetNewsForApp(query news.AppNewsQueryOption, ops ...Request
 }
 
 // GetNewsForAppAuthed see https://partner.steamgames.com/doc/webapi/ISteamNews#GetNewsForAppAuthed
-func (i *ISteamNews) GetNewsForAppAuthed(query news.AppNewsQueryOption, ops ...RequestOptions) (news.AppNewsList, error) {
-	return i.GetNewsForApp(query, joinRequestOptions(ops, WithRequestHost(PartnerHost), WithRequestURL(news.URLGetNewsForAppAuthed))...)
+func (i *ISteamNews) GetNewsForAppAuthed(query news.AppNewsQueryOption, ops ...RequestOption) (news.AppNewsList, error) {
+	return i.GetNewsForApp(query, joinRequestOptions(ops, WithHost(PartnerHost), WithURL(news.URLGetNewsForAppAuthed))...)
 }

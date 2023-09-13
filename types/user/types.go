@@ -2,47 +2,26 @@ package user
 
 import "github.com/246859/steamapi/types/steam"
 
-type OwnershipQueryOption struct {
-	Key     string `json:"key" mapstructure:"key"`
-	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
-	AppId   uint32 `json:"appid" mapstructure:"appid" valid:"required"`
-}
-
 type AppPriceInfoQueryOption struct {
-	Key     string `json:"key" mapstructure:"key"`
-	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
-	AppIds  string `json:"appids" mapstructure:"appids" valid:"required"`
+	steam.SteamId
+	AppIds string `json:"appids" mapstructure:"appids" valid:"required"`
 }
 
 type DeletedSteamIdsQueryOption struct {
-	Key        string `json:"key" mapstructure:"key"`
-	RowVersion uint   `json:"rowersion" mapstructure:"rowersion" valid:"required"`
+	RowVersion uint `json:"rowersion" mapstructure:"rowersion" valid:"required"`
 }
 
 type FriendListQueryOption struct {
-	Key          string `json:"key" mapstructure:"key"`
-	SteamId      uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
+	steam.SteamId
 	Relationship string `json:"relationship" mapstructure:"relationship"`
 }
 
-type SteamIdsQueryOption struct {
-	Key      string `json:"key" mapstructure:"key"`
-	SteamIds string `json:"steamids" mapstructure:"steamids" valid:"required"`
-}
-
-type SteamIdQueryOption struct {
-	Key     string `json:"key" mapstructure:"key"`
-	SteamId uint   `json:"steamid" mapstructure:"steamid" valid:"required"`
-}
-
 type ResolveVanityUrlQueryOption struct {
-	Key       string `json:"key" mapstructure:"key"`
 	VanityUrl string `json:"vanityurl" mapstructure:"vanityurl" valid:"required"`
 	UrlType   int    `json:"urltype" mapstructure:"urltype"`
 }
 
 type PublisherAppOwnershipChangeQueryOption struct {
-	Key               string `json:"key" mapstructure:"key"`
 	PackageRowVersion string `json:"packagerowversion" mapstructure:"packagerowversion" valid:"required"`
 	CdKeyRowVersion   string `json:"cdkeyRowversion" mapstructure:"cdkeyRowversion" valid:"required"`
 }

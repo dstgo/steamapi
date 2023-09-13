@@ -16,21 +16,21 @@ const (
 	QueryLanguage    = "language"
 )
 
-type Options func(client *Client)
+type ClientOption func(client *Client)
 
-func WithKey(key string) Options {
+func WithClientKey(key string) ClientOption {
 	return func(c *Client) {
 		c.cfg.key = key
 	}
 }
 
-func WithResty(client *resty.Client) Options {
+func WithClientResty(client *resty.Client) ClientOption {
 	return func(c *Client) {
 		c.client = client
 	}
 }
 
-func WithHttps() Options {
+func WithHttpsClient() ClientOption {
 	return func(c *Client) {
 		c.cfg.https = true
 	}
@@ -54,11 +54,11 @@ type ClientCfg struct {
 // you can pass the NopKey
 func New(key string) (*Client, error) {
 	return NewWith(
-		WithKey(key),
+		WithClientKey(key),
 	)
 }
 
-func NewWith(options ...Options) (*Client, error) {
+func NewWith(options ...ClientOption) (*Client, error) {
 
 	client := new(Client)
 

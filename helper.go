@@ -57,6 +57,6 @@ func toMap(in any) (map[string]any, error) {
 	return out, nil
 }
 
-func joinRequestOptions(options []RequestOptions, ops ...RequestOptions) []RequestOptions {
+func joinRequestOptions(options []RequestOption, ops ...RequestOption) []RequestOption {
 	return append(ops, options...)
 }

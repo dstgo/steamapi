@@ -16,13 +16,10 @@ type ISteamUser struct {
 }
 
 // CheckAppOwnership see https://partner.steamgames.com/doc/webapi/ISteamUser#CheckAppOwnership
-func (i *ISteamUser) CheckAppOwnership(key string, steamId uint, appId uint32, ops ...RequestOptions) (user.AppOwnershipList, error) {
+func (i *ISteamUser) CheckAppOwnership(ids steam.SteamAppId, ops ...RequestOption) (user.AppOwnershipList, error) {
 	var appOwnership user.AppOwnershipList
-	queryOption := user.OwnershipQueryOption{
-		Key: key, AppId: appId, SteamId: steamId,
-	}
-	_, err := i.c.Get(PartnerHost, user.URLCheckAppOwnership, &appOwnership,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+	ops = joinRequestOptions(ops, WithQueryForm(ids))
+	_, err := i.c.Get(PartnerHost, user.URLCheckAppOwnership, &appOwnership, ops...)
 	if err != nil {
 		return appOwnership, err
 	}
@@ -30,50 +27,38 @@ func (i *ISteamUser) CheckAppOwnership(key string, steamId uint, appId uint32, o
 }
 
 // GetAppPriceInfo see https://partner.steamgames.com/doc/webapi/ISteamUser#GetAppPriceInfo
-func (i *ISteamUser) GetAppPriceInfo(key string, steamId uint, appIds string, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.AppPriceInfoQueryOption{
-		Key: key, SteamId: steamId, AppIds: appIds,
-	}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetAppPriceInfo,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) GetAppPriceInfo(steamId uint, appIds string, ops ...RequestOption) (steam.CommonResponse, error) {
+	queryOption := user.AppPriceInfoQueryOption{SteamId: steam.SteamId{SteamId: steamId}, AppIds: appIds}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetAppPriceInfo, ops...)
 }
 
 // GetDeletedSteamIds see https://partner.steamgames.com/doc/webapi/ISteamUser#GetDeletedSteamIds
-func (i *ISteamUser) GetDeletedSteamIds(key string, rowVersion uint, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.DeletedSteamIdsQueryOption{
-		Key: key, RowVersion: rowVersion,
-	}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetDeletedSteamIds,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) GetDeletedSteamIds(rowVersion uint, ops ...RequestOption) (steam.CommonResponse, error) {
+	queryOption := user.DeletedSteamIdsQueryOption{RowVersion: rowVersion}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetDeletedSteamIds, ops...)
 }
 
 // GetFriendList see https://partner.steamgames.com/doc/webapi/ISteamUser#GetFriendList
-func (i *ISteamUser) GetFriendList(key string, steamId uint, relationship string, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.FriendListQueryOption{
-		Key: key, SteamId: steamId, Relationship: relationship,
-	}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetFriendList,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) GetFriendList(relation user.FriendListQueryOption, ops ...RequestOption) (steam.CommonResponse, error) {
+	ops = joinRequestOptions(ops, WithQueryForm(relation))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetFriendList, ops...)
 }
 
 // GetPlayerBans see https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerBans
-func (i *ISteamUser) GetPlayerBans(key string, steamids string, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.SteamIdsQueryOption{
-		Key: key, SteamIds: steamids,
-	}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetPlayerBans,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) GetPlayerBans(steamids string, ops ...RequestOption) (steam.CommonResponse, error) {
+	queryOption := steam.SteamIds{SteamIds: steamids}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetPlayerBans, ops...)
 }
 
 // GetPlayerSummaries see https://partner.steamgames.com/doc/webapi/ISteamUser#GetPlayerSummaries
-func (i *ISteamUser) GetPlayerSummaries(key string, steamids string, ops ...RequestOptions) (user.PlayerSummaryList, error) {
+func (i *ISteamUser) GetPlayerSummaries(steamids string, ops ...RequestOption) (user.PlayerSummaryList, error) {
 	var summaryList user.PlayerSummaryList
-	queryOption := user.SteamIdsQueryOption{
-		Key: key, SteamIds: steamids,
-	}
-	_, err := i.c.Get(PublicHost, user.URLGetPlayerSummaries, &summaryList,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...,
-	)
+	queryOption := steam.SteamIds{SteamIds: steamids}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	_, err := i.c.Get(PublicHost, user.URLGetPlayerSummaries, &summaryList, ops...)
 	if err != nil {
 		return summaryList, err
 	}
@@ -81,13 +66,11 @@ func (i *ISteamUser) GetPlayerSummaries(key string, steamids string, ops ...Requ
 }
 
 // GetPublisherAppOwnership see https://partner.steamgames.com/doc/webapi/ISteamUser#GetPublisherAppOwnership
-func (i *ISteamUser) GetPublisherAppOwnership(key string, steamId uint, ops ...RequestOptions) (user.PublisherAppOwnershipList, error) {
+func (i *ISteamUser) GetPublisherAppOwnership(steamId uint, ops ...RequestOption) (user.PublisherAppOwnershipList, error) {
 	var publisherAppOwnership user.PublisherAppOwnershipList
-	queryOption := user.SteamIdQueryOption{
-		Key: key, SteamId: steamId,
-	}
-	_, err := i.c.Get(PublicHost, user.URLGetPublisherAppOwnership, &publisherAppOwnership,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+	queryOption := steam.SteamId{SteamId: steamId}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	_, err := i.c.Get(PublicHost, user.URLGetPublisherAppOwnership, &publisherAppOwnership, ops...)
 	if err != nil {
 		return publisherAppOwnership, err
 	}
@@ -95,10 +78,10 @@ func (i *ISteamUser) GetPublisherAppOwnership(key string, steamId uint, ops ...R
 }
 
 // GetPublisherAppOwnershipChanges see https://partner.steamgames.com/doc/webapi/ISteamUser#GetPublisherAppOwnershipChanges
-func (i *ISteamUser) GetPublisherAppOwnershipChanges(chaneQueryOption user.PublisherAppOwnershipChangeQueryOption, ops ...RequestOptions) (user.AppOwnershipChanges, error) {
+func (i *ISteamUser) GetPublisherAppOwnershipChanges(chaneQueryOption user.PublisherAppOwnershipChangeQueryOption, ops ...RequestOption) (user.AppOwnershipChanges, error) {
 	var changes user.AppOwnershipChanges
-	_, err := i.c.Get(PartnerHost, user.URLGetPublisherAppOwnershipChanges, &changes,
-		joinRequestOptions(ops, WithRequestQuery(chaneQueryOption))...)
+	ops = joinRequestOptions(ops, WithQueryForm(chaneQueryOption))
+	_, err := i.c.Get(PartnerHost, user.URLGetPublisherAppOwnershipChanges, &changes, ops...)
 	if err != nil {
 		return changes, err
 	}
@@ -106,15 +89,14 @@ func (i *ISteamUser) GetPublisherAppOwnershipChanges(chaneQueryOption user.Publi
 }
 
 // GetUserGroupList see https://partner.steamgames.com/doc/webapi/ISteamUser#GetUserGroupList
-func (i *ISteamUser) GetUserGroupList(key string, steamId uint, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.SteamIdQueryOption{Key: key, SteamId: steamId}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetUserGroupList,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) GetUserGroupList(steamId uint, ops ...RequestOption) (steam.CommonResponse, error) {
+	queryOption := steam.SteamId{SteamId: steamId}
+	ops = joinRequestOptions(ops, WithQueryForm(queryOption))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLGetUserGroupList, ops...)
 }
 
 // ResolveVanityURL see https://partner.steamgames.com/doc/webapi/ISteamUser#ResolveVanityURL
-func (i *ISteamUser) ResolveVanityURL(key string, vanityUrl string, urlType int, ops ...RequestOptions) (steam.CommonResponse, error) {
-	queryOption := user.ResolveVanityUrlQueryOption{Key: key, VanityUrl: vanityUrl, UrlType: urlType}
-	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLResolveVanityURL,
-		joinRequestOptions(ops, WithRequestQuery(queryOption))...)
+func (i *ISteamUser) ResolveVanityURL(urlResolve user.ResolveVanityUrlQueryOption, ops ...RequestOption) (steam.CommonResponse, error) {
+	ops = joinRequestOptions(ops, WithQueryForm(urlResolve))
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLResolveVanityURL, ops...)
 }

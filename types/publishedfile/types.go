@@ -3,7 +3,6 @@ package publishedfile
 import "github.com/246859/steamapi/types/steam"
 
 type FileQueryOption struct {
-	Key                    string                  `json:"key" mapstructure:"key"`
 	Language               steam.LanguageCode      `json:"language" mapstructure:"language"`
 	QueryType              EPublishedFileQueryType `json:"query_type" mapstructure:"query_type"`
 	Page                   uint                    `json:"page" mapstructure:"page"`

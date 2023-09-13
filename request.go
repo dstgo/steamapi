@@ -74,41 +74,53 @@ func (r *Request) Send() (*resty.Response, error) {
 	return rawResponse, nil
 }
 
-// RequestOptions
+// RequestOption
 // use options to override some request settings
-type RequestOptions func(request *Request)
+type RequestOption func(request *Request)
 
-func WithRequestMethod(method string) RequestOptions {
+func WithAPIKey(key string) RequestOption {
+	return func(request *Request) {
+		request.Request.QueryParam.Set(QuerySteamApiKey, key)
+	}
+}
+
+func WithLanguage(language string) RequestOption {
+	return func(request *Request) {
+		request.Request.QueryParam.Set(QueryLanguage, language)
+	}
+}
+
+func WithMethod(method string) RequestOption {
 	return func(request *Request) {
 		request.Method = method
 	}
 }
 
-func WithRequestHost(host string) RequestOptions {
+func WithHost(host string) RequestOption {
 	return func(request *Request) {
 		request.Host = host
 	}
 }
 
-func WithRequestURL(url string) RequestOptions {
+func WithURL(url string) RequestOption {
 	return func(request *Request) {
 		request.Url = url
 	}
 }
 
-func WithRequestFn(fn func(r *resty.Request)) RequestOptions {
+func WithRequest(fn func(r *resty.Request)) RequestOption {
 	return func(request *Request) {
 		fn(request.Request)
 	}
 }
 
-func WithRequestQueryMap(query map[string]any) RequestOptions {
+func WithQueryMap(query map[string]any) RequestOption {
 	return func(request *Request) {
 		request.QueryForm = query
 	}
 }
 
-func WithRequestQuery(query any) RequestOptions {
+func WithQueryForm(query any) RequestOption {
 	return func(request *Request) {
 		form, err := toMap(query)
 		if err != nil {
@@ -124,7 +136,7 @@ func WithRequestQuery(query any) RequestOptions {
 	}
 }
 
-func WithRequestBody(body any) RequestOptions {
+func WithBody(body any) RequestOption {
 	return func(request *Request) {
 		ok, err := govalidator.ValidateStruct(body)
 		if !ok {
@@ -135,14 +147,14 @@ func WithRequestBody(body any) RequestOptions {
 	}
 }
 
-func WithRequestHeaders(header http.Header) RequestOptions {
+func WithHeader(header http.Header) RequestOption {
 	return func(request *Request) {
 		request.Header = header
 	}
 }
 
 // NewRequest creates a new request, you can use options to customize request configuration
-func (c *Client) NewRequest(method, host, url string, options ...RequestOptions) *Request {
+func (c *Client) NewRequest(method, host, url string, options ...RequestOption) *Request {
 
 	r := &Request{
 		cfg: c.cfg,
@@ -192,7 +204,7 @@ func (c *Client) NewRequest(method, host, url string, options ...RequestOptions)
 }
 
 // SendRequest this is a helper func to send a request, resultPtr must be a pointer.
-func (c *Client) SendRequest(method, host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+func (c *Client) SendRequest(method, host, url string, resultPtr any, opts ...RequestOption) (*resty.Response, error) {
 	if c == nil {
 		return nil, errors.New("client must be not nil")
 	}
@@ -208,16 +220,16 @@ func (c *Client) SendRequest(method, host, url string, resultPtr any, opts ...Re
 	return rawResponse, nil
 }
 
-func (c *Client) Get(host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+func (c *Client) Get(host, url string, resultPtr any, opts ...RequestOption) (*resty.Response, error) {
 	return c.SendRequest(http.MethodGet, host, url, resultPtr, opts...)
 }
 
-func (c *Client) Post(host, url string, resultPtr any, opts ...RequestOptions) (*resty.Response, error) {
+func (c *Client) Post(host, url string, resultPtr any, opts ...RequestOption) (*resty.Response, error) {
 	return c.SendRequest(http.MethodPost, host, url, resultPtr, opts...)
 }
 
 // Unknown some interfaces response are unknown, so return steam.CommonResponse that is alias of map[string]any
-func (c *Client) Unknown(method, host, url string, opts ...RequestOptions) (steam.CommonResponse, error) {
+func (c *Client) Unknown(method, host, url string, opts ...RequestOption) (steam.CommonResponse, error) {
 	commonResponse := steam.CommonResponse{}
 	_, err := c.SendRequest(method, host, url, &commonResponse, opts...)
 	return commonResponse, err
