@@ -14,9 +14,9 @@ go get github.com/246859/steamapi
 ```
 
 ## 支持的接口
-由于host是`partner.steam-api.com`的接口需要发行商密钥才能够调用，
+由于host为`partner.steam-api.com`的接口需要发行商密钥才能够调用，
 而发行商密钥必须要100$才能注册，所以我们没法去获取它的具体响应是什么，
-于是接口统一返回类型为`map[string]any`
+于是这类接口统一返回的响应类型为`map[string]any`
 
 - IPublishedFileService
 - ISteamNews
@@ -36,12 +36,12 @@ go get github.com/246859/steamapi
 // initialize client with NopKey
 client, err := steamapi.New(steamapi.NopKey)
 if err != nil {
-    panic(err)
+panic(err)
 }
 // call the webapiutil interface
-info, err := client.WebApiUtil().GetServerInfo()
+info, err := client.ISteamWebAPIUtil().GetServerInfo()
 if err != nil {
-    panic(err)
+panic(err)
 }
 fmt.Printf("%+v", info)
 ```
@@ -59,11 +59,11 @@ fmt.Printf("%+v", info)
 // pass your own key
 client, err := steamapi.New(key)
 if err != nil {
-    panic(err)
+panic(err)
 }
-list, err := client.WebApiUtil().GetSupportedAPIList()
+list, err := client.ISteamWebAPIUtil().GetSupportedAPIList()
 if err != nil {
-    panic(err)
+panic(err)
 }
 fmt.Printf("%+v", list)
 ```
