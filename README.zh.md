@@ -24,6 +24,8 @@ go get github.com/246859/steamapi
 - IPlayerService
 - ISteamWebAPIUtil
 - ISteamApps
+- ISteamPublishedItemVoting
+- ISteamPublishedItemSearch
 
 
 
