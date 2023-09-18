@@ -26,6 +26,7 @@ go get github.com/246859/steamapi
 - ISteamApps
 - ISteamPublishedItemVoting
 - ISteamPublishedItemSearch
+- ISteamLeaderBoard
 
 
 
