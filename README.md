@@ -27,6 +27,7 @@ Since the host is `partner.steam-api.com`, the interface needs the publisher key
 - ISteamPublishedItemVoting
 - ISteamPublishedItemSearch
 - ISteamLeaderBoard
+- ISteamUserAuth
 
 
 

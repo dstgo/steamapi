@@ -100,3 +100,24 @@ func (i *ISteamUser) ResolveVanityURL(urlResolve user.ResolveVanityUrlQueryOptio
 	ops = joinRequestOptions(ops, WithQueryForm(urlResolve))
 	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLResolveVanityURL, ops...)
 }
+
+func (c *Client) ISteamUserAuth() *ISteamUserAuth {
+	return &ISteamUserAuth{c: c}
+}
+
+// ISteamUserAuth see https://partner.steamgames.com/doc/webapi/ISteamUserAuth
+type ISteamUserAuth struct {
+	c *Client
+}
+
+// AuthenticateUser see https://partner.steamgames.com/doc/webapi/ISteamUserAuth#AuthenticateUser
+func (i *ISteamUserAuth) AuthenticateUser(authenticateOpt user.AuthenticateOpt, ops ...RequestOption) (steam.CommonResponse, error) {
+	ops = joinRequestOptions(ops, WithBody(authenticateOpt))
+	return i.c.Unknown(http.MethodPost, PartnerHost, user.URLAuthenticateUser, ops...)
+}
+
+// AuthenticateUserTicket see https://partner.steamgames.com/doc/webapi/ISteamUserAuth#AuthenticateUserTicket
+func (i *ISteamUserAuth) AuthenticateUserTicket(ticketAuthenticateOpt user.TicketAuthenticateOpt, ops ...RequestOption) (steam.CommonResponse, error) {
+	ops = joinRequestOptions(ops, WithQueryForm(ticketAuthenticateOpt))
+	return i.c.Unknown(http.MethodPost, PartnerHost, user.URLAuthenticateUserTicket, ops...)
+}

@@ -12,3 +12,8 @@ const (
 	URLGetUserGroupList                = "/ISteamUser/GetUserGroupList/v1/"
 	URLResolveVanityURL                = "/ISteamUser/ResolveVanityURL/v1/"
 )
+
+const (
+	URLAuthenticateUser       = "/ISteamUserAuth/AuthenticateUser/v1/"
+	URLAuthenticateUserTicket = "/ISteamUserAuth/AuthenticateUserTicket/v1/"
+)

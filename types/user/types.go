@@ -77,3 +77,15 @@ type AppOwnershipChanges struct {
 		MoreData          bool                  `json:"moredata" mapstructure:"moredata"`
 	}
 }
+
+type AuthenticateOpt struct {
+	SteamId           uint     `json:"steamid" mapstructure:"steamid" valid:"required"`
+	SessionKey        [32]byte `json:"sessionkey" mapstructure:"sessionkey" valid:"required"`
+	EncryptedLoginKey []byte   `json:"encryptedloginkey" mapstructure:"encryptedloginkey" valid:"required"`
+}
+
+type TicketAuthenticateOpt struct {
+	AppId    uint   `json:"appid" mapstructure:"appid" valid:"required"`
+	Ticket   string `json:"ticket" mapstructure:"ticket" valid:"required"`
+	Identity string `json:"identity" mapstructure:"identity" valid:"required"`
+}
