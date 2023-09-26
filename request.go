@@ -1,6 +1,7 @@
 package steamapi
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/246859/steamapi/types/steam"
 	"github.com/asaskevich/govalidator"
@@ -17,6 +18,9 @@ const (
 
 	// PartnerHost is the partner steam server, you should take your publisher api key in query parameters in any case
 	PartnerHost = "partner.steam-api.com"
+
+	// InputJson service interface need "input_json" query parameter to pass post params
+	InputJson = "input_json"
 )
 
 var (
@@ -28,6 +32,7 @@ type Request struct {
 	Method    string
 	Url       string
 	QueryForm map[string]any
+	FormData  map[string]any
 	Body      any
 	Header    http.Header
 	err       error
@@ -43,9 +48,9 @@ func (r *Request) FullURL() string {
 	return "http://" + path.Join(r.Host, r.Url)
 }
 
-func (r *Request) QueryFormEscaped() map[string]string {
-	safeForm := make(map[string]string, len(r.QueryForm))
-	for k, v := range r.QueryForm {
+func (r *Request) FormEscaped(form map[string]any) map[string]string {
+	safeForm := make(map[string]string, len(form))
+	for k, v := range form {
 		safeForm[k] = url.QueryEscape(cast.ToString(v))
 	}
 	return safeForm
@@ -56,7 +61,8 @@ func (r *Request) Attach(req *resty.Request) {
 	req.Method = r.Method
 	req.Body = r.Body
 	req.Header = r.Header
-	req.SetQueryParams(r.QueryFormEscaped())
+	req.SetQueryParams(r.FormEscaped(r.QueryForm))
+	req.SetFormData(r.FormEscaped(r.FormData))
 	r.Request = req
 }
 
@@ -133,6 +139,38 @@ func WithQueryForm(query any) RequestOption {
 			return
 		}
 		request.QueryForm = form
+	}
+}
+
+func WithFormData(formdata any) RequestOption {
+	return func(request *Request) {
+		formdata, err := toMap(formdata)
+		if err != nil {
+			request.err = err
+			return
+		}
+		ok, err := govalidator.ValidateStruct(formdata)
+		if !ok {
+			request.err = err
+			return
+		}
+		request.FormData = formdata
+	}
+}
+
+func WithInputJson(input any) RequestOption {
+	return func(request *Request) {
+		ok, err := govalidator.ValidateStruct(input)
+		if !ok {
+			request.err = err
+			return
+		}
+		inputjson, err := json.Marshal(input)
+		if err != nil {
+			request.err = err
+			return
+		}
+		request.SetQueryParam(InputJson, string(inputjson))
 	}
 }
 
