@@ -17,6 +17,6 @@ type ISteamBroadcastService struct {
 
 // PostGameDataFrame see https://partner.steamgames.com/doc/webapi/IBroadcastService#PostGameDataFrame
 func (i *ISteamBroadcastService) PostGameDataFrame(frame boradcast.DataFrame, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(frame))
+	ops = joinRequestOptions(ops, WithInputJson(frame))
 	return i.c.Unknown(http.MethodPost, PartnerHost, boradcast.URLPostGameDataFrame, ops...)
 }

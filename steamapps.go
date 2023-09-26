@@ -79,7 +79,7 @@ func (i *ISteamApps) GetServersAtAddress(addr string, ops ...RequestOption) (app
 
 // SetAppBuildLive see https://partner.steamgames.com/doc/webapi/ISteamApps#SetAppBuildLive
 func (i *ISteamApps) SetAppBuildLive(updateOption app.BuildLiveUpdateOption, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(updateOption))
+	ops = joinRequestOptions(ops, WithFormData(updateOption))
 	return i.c.Unknown(http.MethodPost, PartnerHost, app.URLSetAppBuildLive, ops...)
 }
 

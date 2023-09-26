@@ -17,13 +17,13 @@ type ISteamLeaderBoards struct {
 
 // DeleteLeaderBoard see https://partner.steamgames.com/doc/webapi/ISteamLeaderboards#DeleteLeaderBoard
 func (i *ISteamLeaderBoards) DeleteLeaderBoard(deleteOpt leaderboard.DeleteOpt, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(deleteOpt))
+	ops = joinRequestOptions(ops, WithFormData(deleteOpt))
 	return i.c.Unknown(http.MethodPost, PartnerHost, leaderboard.URLDeleteLeaderboard, ops...)
 }
 
 // FindOrCreateLeaderboard see https://partner.steamgames.com/doc/webapi/ISteamLeaderboards#FindOrCreateLeaderboard
 func (i *ISteamLeaderBoards) FindOrCreateLeaderboard(createOpt leaderboard.CreateOpt, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(createOpt))
+	ops = joinRequestOptions(ops, WithFormData(createOpt))
 	return i.c.Unknown(http.MethodPost, PartnerHost, leaderboard.URLFindOrCreateLeaderboard, ops...)
 }
 
@@ -41,12 +41,12 @@ func (i *ISteamLeaderBoards) GetLeaderboardsForGame(appid uint, ops ...RequestOp
 
 // ResetLeaderboard see https://partner.steamgames.com/doc/webapi/ISteamLeaderboards#ResetLeaderboard
 func (i *ISteamLeaderBoards) ResetLeaderboard(opt leaderboard.ResetOpt, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(opt))
+	ops = joinRequestOptions(ops, WithFormData(opt))
 	return i.c.Unknown(http.MethodPost, PartnerHost, leaderboard.URLResetLeaderboard, ops...)
 }
 
 // SetLeaderboardScore see https://partner.steamgames.com/doc/webapi/ISteamLeaderboards#SetLeaderboardScore
 func (i *ISteamLeaderBoards) SetLeaderboardScore(opt leaderboard.ScoreSetOpt, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(opt))
+	ops = joinRequestOptions(ops, WithFormData(opt))
 	return i.c.Unknown(http.MethodPost, PartnerHost, leaderboard.URLSetLeaderboardScore, ops...)
 }

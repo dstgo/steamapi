@@ -112,12 +112,12 @@ type ISteamUserAuth struct {
 
 // AuthenticateUser see https://partner.steamgames.com/doc/webapi/ISteamUserAuth#AuthenticateUser
 func (i *ISteamUserAuth) AuthenticateUser(authenticateOpt user.AuthenticateOpt, ops ...RequestOption) (steam.CommonResponse, error) {
-	ops = joinRequestOptions(ops, WithBody(authenticateOpt))
+	ops = joinRequestOptions(ops, WithFormData(authenticateOpt))
 	return i.c.Unknown(http.MethodPost, PartnerHost, user.URLAuthenticateUser, ops...)
 }
 
 // AuthenticateUserTicket see https://partner.steamgames.com/doc/webapi/ISteamUserAuth#AuthenticateUserTicket
 func (i *ISteamUserAuth) AuthenticateUserTicket(ticketAuthenticateOpt user.TicketAuthenticateOpt, ops ...RequestOption) (steam.CommonResponse, error) {
 	ops = joinRequestOptions(ops, WithQueryForm(ticketAuthenticateOpt))
-	return i.c.Unknown(http.MethodPost, PartnerHost, user.URLAuthenticateUserTicket, ops...)
+	return i.c.Unknown(http.MethodGet, PartnerHost, user.URLAuthenticateUserTicket, ops...)
 }
