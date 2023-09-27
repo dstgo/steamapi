@@ -30,6 +30,8 @@ go get github.com/246859/steamapi
 - ISteamUserAuth
 - ISteamBroadcastService
 - ISteamRemoteStorage
+- ISteamGameServerStats
+- ISteamCommunity
 
 
 
