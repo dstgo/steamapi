@@ -2,7 +2,7 @@ package steamapi
 
 import (
 	"errors"
-	"github.com/246859/steamapi/types/steam"
+	"github.com/dstgo/steamapi/types/steam"
 	"github.com/go-resty/resty/v2"
 	"github.com/mitchellh/mapstructure"
 	"net/http"

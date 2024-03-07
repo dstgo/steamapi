@@ -1,6 +1,6 @@
 package user
 
-import "github.com/246859/steamapi/types/steam"
+import "github.com/dstgo/steamapi/types/steam"
 
 type AppPriceInfoQueryOption struct {
 	steam.SteamId

@@ -1,6 +1,6 @@
 package news
 
-import "github.com/246859/steamapi/types/steam"
+import "github.com/dstgo/steamapi/types/steam"
 
 type AppNewsQueryOption struct {
 	AppId     uint   `json:"appid" mapstructure:"appid" valid:"required"`

@@ -1,6 +1,6 @@
 package publisheditem
 
-import "github.com/246859/steamapi/types/publishedfile"
+import "github.com/dstgo/steamapi/types/publishedfile"
 
 type RankOption struct {
 	StartIndex        uint `json:"startidx" mapstructure:"startidx"`

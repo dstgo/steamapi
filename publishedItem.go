@@ -1,8 +1,8 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/publisheditem"
-	"github.com/246859/steamapi/types/steam"
+	"github.com/dstgo/steamapi/types/publisheditem"
+	"github.com/dstgo/steamapi/types/steam"
 	"net/http"
 )
 

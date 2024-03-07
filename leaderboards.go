@@ -1,8 +1,8 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/leaderboard"
-	"github.com/246859/steamapi/types/steam"
+	"github.com/dstgo/steamapi/types/leaderboard"
+	"github.com/dstgo/steamapi/types/steam"
 	"net/http"
 )
 

@@ -1,8 +1,8 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/community"
-	"github.com/246859/steamapi/types/steam"
+	"github.com/dstgo/steamapi/types/community"
+	"github.com/dstgo/steamapi/types/steam"
 	"net/http"
 )
 

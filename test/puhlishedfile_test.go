@@ -2,9 +2,9 @@ package test
 
 import (
 	"fmt"
-	"github.com/246859/steamapi"
-	"github.com/246859/steamapi/types/publishedfile"
-	"github.com/246859/steamapi/types/steam"
+	"github.com/dstgo/steamapi"
+	"github.com/dstgo/steamapi/types/publishedfile"
+	"github.com/dstgo/steamapi/types/steam"
 	"testing"
 )
 

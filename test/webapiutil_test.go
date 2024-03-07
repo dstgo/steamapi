@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/246859/steamapi"
+	"github.com/dstgo/steamapi"
 	"testing"
 )
 

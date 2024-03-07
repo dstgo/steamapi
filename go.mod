@@ -1,4 +1,4 @@
-module github.com/246859/steamapi
+module github.com/dstgo/steamapi
 
 go 1.21.0
 

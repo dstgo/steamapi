@@ -3,8 +3,8 @@ package steamapi
 import (
 	"encoding/json"
 	"errors"
-	"github.com/246859/steamapi/types/steam"
 	"github.com/asaskevich/govalidator"
+	"github.com/dstgo/steamapi/types/steam"
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/cast"
 	"net/http"

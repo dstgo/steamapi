@@ -1,7 +1,7 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/news"
+	"github.com/dstgo/steamapi/types/news"
 )
 
 func (c *Client) ISteamNews() *ISteamNews {

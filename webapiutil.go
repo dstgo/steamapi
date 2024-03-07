@@ -1,7 +1,7 @@
 package steamapi
 
 import (
-	"github.com/246859/steamapi/types/webapiutil"
+	"github.com/dstgo/steamapi/types/webapiutil"
 )
 
 func (c *Client) ISteamWebAPIUtil() *ISteamWebAPIUtil {

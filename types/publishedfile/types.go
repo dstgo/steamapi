@@ -1,6 +1,6 @@
 package publishedfile
 
-import "github.com/246859/steamapi/types/steam"
+import "github.com/dstgo/steamapi/types/steam"
 
 type FileQueryOption struct {
 	Language               steam.LanguageCode      `json:"language" mapstructure:"language"`

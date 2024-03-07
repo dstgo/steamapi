@@ -1,6 +1,6 @@
 package player
 
-import "github.com/246859/steamapi/types/steam"
+import "github.com/dstgo/steamapi/types/steam"
 
 type PlayedGamesQueryOption struct {
 	steam.SteamId

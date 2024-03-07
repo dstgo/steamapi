@@ -1,6 +1,6 @@
 package community
 
-import "github.com/246859/steamapi/types/steam"
+import "github.com/dstgo/steamapi/types/steam"
 
 type ReportAbuseForm struct {
 	steam.AppId
