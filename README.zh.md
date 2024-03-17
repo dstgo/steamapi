@@ -10,7 +10,7 @@ steamapi 是一个由go编写的 Steam Web API 客户端库，通过它你可以
 
 ## 安装
 ```sh
-go get github.com/246859/steamapi
+go get github.com/dstgo/steamapi@latest
 ```
 
 ## 支持的接口

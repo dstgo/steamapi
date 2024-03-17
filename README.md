@@ -11,7 +11,7 @@ The original Steam API Doc address is located at [Steam Web API](https://partner
 
 ## Install
 ```sh
-go get github.com/246859/steamapi
+go get github.com/dstgo/steamapi@latest
 ```
 
 ## Supported Interface
