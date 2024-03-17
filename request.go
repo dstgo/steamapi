@@ -60,7 +60,9 @@ func (r *Request) Attach(req *resty.Request) {
 	req.URL = r.FullURL()
 	req.Method = r.Method
 	req.Body = r.Body
-	req.Header = r.Header
+	for k, v := range r.Header {
+		req.Header[k] = v
+	}
 	req.SetQueryParams(r.FormEscaped(r.QueryForm))
 	req.SetFormData(r.FormEscaped(r.FormData))
 	r.Request = req
