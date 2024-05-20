@@ -256,6 +256,8 @@ func (c *Client) SendRequest(method, host, url string, resultPtr any, opts ...Re
 	rawResponse, err := newRequest.Send()
 	if err != nil {
 		return nil, err
+	} else if rawResponse.StatusCode() >= 400 {
+		return nil, errors.New(http.StatusText(rawResponse.StatusCode()))
 	}
 	return rawResponse, nil
 }
